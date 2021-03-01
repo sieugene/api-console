@@ -1,12 +1,10 @@
-import {AuthState} from './auth';
 import login from '../reducers/auth';
 
 const RootReducer = {
-  ...login,
+  auth: login,
 };
-
 export type AppState = {
-  auth: AuthState;
+  [T in keyof typeof RootReducer]: ReturnType<typeof RootReducer[keyof typeof RootReducer]>;
 };
 
 export default RootReducer;

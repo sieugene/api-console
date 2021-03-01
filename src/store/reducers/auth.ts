@@ -15,40 +15,39 @@ export const initialState: AuthState = {
   sublogin: null,
 };
 
-export default {
-  auth: handleActions(
-    {
-      [ActionTypes.AUTHENTICATE]: (state) => {
-        return {
-          ...state,
-          loading: true,
-        };
-      },
-      [ActionTypes.AUTHENTICATE_SUCCESS]: (state, {payload}) => {
-        return {
-          ...state,
-          loading: false,
-          sessionKey: payload.sessionKey,
-          login: payload.login,
-          sublogin: payload.sublogin,
-        };
-      },
-      [ActionTypes.AUTHENTICATE_FAILURE]: (state) => {
-        return {
-          ...state,
-          sessionKey: null,
-          login: null,
-          sublogin: null,
-        };
-      },
-      [ActionTypes.LOGOUT]: (state) => {
-        return {
-          ...state,
-          loading: false,
-          sessionKey: null,
-        };
-      },
+const AuthReducer = handleActions(
+  {
+    [ActionTypes.AUTHENTICATE]: (state) => {
+      return {
+        ...state,
+        loading: true,
+      };
     },
-    initialState
-  ),
-};
+    [ActionTypes.AUTHENTICATE_SUCCESS]: (state, {payload}) => {
+      return {
+        ...state,
+        loading: false,
+        sessionKey: payload.sessionKey,
+        login: payload.login,
+        sublogin: payload.sublogin,
+      };
+    },
+    [ActionTypes.AUTHENTICATE_FAILURE]: (state) => {
+      return {
+        ...state,
+        sessionKey: null,
+        login: null,
+        sublogin: null,
+      };
+    },
+    [ActionTypes.LOGOUT]: (state) => {
+      return {
+        ...state,
+        loading: false,
+        sessionKey: null,
+      };
+    },
+  },
+  initialState
+);
+export default AuthReducer;
