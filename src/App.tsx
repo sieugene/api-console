@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
@@ -8,7 +8,7 @@ import LoginPage from './containers/LoginPage';
 
 const {store, persistor} = createStore();
 
-function App() {
+const App: FC = () => {
   return (
     <Router>
       <Provider store={store}>
@@ -22,6 +22,6 @@ function App() {
       </Provider>
     </Router>
   );
-}
+};
 
 export default App;

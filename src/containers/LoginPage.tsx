@@ -1,10 +1,12 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {FC, useCallback, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 import styled from 'styled-components';
 
-import {authenticate} from './../store/actions/index';
+import {authenticate} from '../store/actions/index';
 import {LoginForm} from '../components/Forms/LoginForm/LoginForm';
+
+import {AppState} from '../store/reducers';
 
 const Wrapper = styled.div`
   height: 100%;
@@ -18,13 +20,13 @@ const LogoStyled = styled.img`
   margin-bottom: 20px;
 `;
 
-function LoginPage({history}) {
+const LoginPage: FC<any> = ({history}) => {
   const dispatch = useDispatch();
   const [login, setLogin] = useState('');
   const [sublogin, setSubLogin] = useState('');
   const [password, setPassword] = useState('');
-  const loading = useSelector((state) => state.auth.loading);
-  const isLoggedIn = useSelector((state) => !!state.auth.sessionKey?.length);
+  const loading = useSelector((state: AppState) => state.auth.loading);
+  const isLoggedIn = useSelector((state: AppState) => !!state.auth.sessionKey?.length);
   const [disableForm, setdisableForm] = useState(false);
 
   useEffect(() => {
@@ -43,7 +45,7 @@ function LoginPage({history}) {
     );
   };
 
-  function onSubmit(event) {
+  function onSubmit() {
     // event.preventDefault();
     // doLogin();
   }
@@ -56,8 +58,8 @@ function LoginPage({history}) {
     }
   }, []);
 
-  const validate = (values) => {
-    const errors = {};
+  const validate = (values: any) => {
+    const errors: any = {};
     if (!values.login) {
       errors.login = 'Required';
     }
@@ -76,6 +78,6 @@ function LoginPage({history}) {
       <LoginForm onSubmit={onSubmit} validate={validate} loading={loading} disabled={disableForm} requestError={''} />
     </Wrapper>
   );
-}
+};
 
 export default withRouter(LoginPage);
