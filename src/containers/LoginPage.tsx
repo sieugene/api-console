@@ -1,12 +1,13 @@
 import React, {FC, useCallback, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {withRouter} from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 import styled from 'styled-components';
 
 import {authenticate} from '../store/actions/index';
 import {LoginForm} from '../components/Forms/LoginForm/LoginForm';
 
 import {AppState} from '../store/reducers';
+import {LoginValues} from '../components/Forms/types';
 
 const Wrapper = styled.div`
   height: 100%;
@@ -20,11 +21,10 @@ const LogoStyled = styled.img`
   margin-bottom: 20px;
 `;
 
-const LoginPage: FC<any> = ({history}) => {
+const LoginPage: FC = () => {
+  const history = useHistory();
+
   const dispatch = useDispatch();
-  const [login, setLogin] = useState('');
-  const [sublogin, setSubLogin] = useState('');
-  const [password, setPassword] = useState('');
   const loading = useSelector((state: AppState) => state.auth.loading);
   const isLoggedIn = useSelector((state: AppState) => !!state.auth.sessionKey?.length);
   const [disableForm, setdisableForm] = useState(false);
@@ -33,9 +33,9 @@ const LoginPage: FC<any> = ({history}) => {
     if (isLoggedIn) {
       history.push('/console');
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, history]);
 
-  const doLogin = () => {
+  function onSubmit({login, sublogin, password}: LoginValues) {
     dispatch(
       authenticate({
         login,
@@ -43,11 +43,6 @@ const LoginPage: FC<any> = ({history}) => {
         password,
       })
     );
-  };
-
-  function onSubmit() {
-    // event.preventDefault();
-    // doLogin();
   }
 
   const disableButtonForm = useCallback((errors) => {
@@ -58,7 +53,7 @@ const LoginPage: FC<any> = ({history}) => {
     }
   }, []);
 
-  const validate = (values: any) => {
+  const validate = (values: LoginValues) => {
     const errors: any = {};
     if (!values.login) {
       errors.login = 'Required';
@@ -80,4 +75,4 @@ const LoginPage: FC<any> = ({history}) => {
   );
 };
 
-export default withRouter(LoginPage);
+export default LoginPage;

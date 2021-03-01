@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {Form, Field} from 'react-final-form';
-import {Button} from './../../Button/Button';
+import {Button} from '../../Button/Button';
 import styled from 'styled-components';
 import {ErrorForm} from './ErrorForm/ErrorForm';
+import {LoginValues} from '../types';
 
 const FormStyle = styled.section`
   width: 520px;
@@ -47,7 +48,7 @@ const FieldBody = styled.div`
 
   input {
     background: #ffffff;
-    border: ${(props) => (props.error ? '1px solid #CF2C00;' : '1px solid rgba(0, 0, 0, 0.2)')};
+    border: ${(props: StyledProps) => (props.error ? '1px solid #CF2C00;' : '1px solid rgba(0, 0, 0, 0.2)')};
     box-sizing: border-box;
     border-radius: 5px;
     height: 40px;
@@ -71,7 +72,25 @@ const FieldBody = styled.div`
   }
 `;
 
-export const LoginForm = ({onSubmit, validate, loading, disabled, requestError}) => (
+type StyledProps = {
+  error: boolean;
+};
+
+type ErrorValues = {
+  password?: string;
+  login?: string;
+  sublogin?: string;
+};
+
+type Props = {
+  onSubmit: (values: LoginValues) => void;
+  validate: (values: LoginValues) => ErrorValues;
+  loading: boolean;
+  disabled: boolean;
+  requestError: string;
+};
+
+export const LoginForm: FC<Props> = ({onSubmit, validate, loading, disabled, requestError}) => (
   <FormStyle>
     <Form
       onSubmit={onSubmit}

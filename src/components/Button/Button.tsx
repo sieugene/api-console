@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {FC} from 'react';
 import styled from 'styled-components';
 import {Loader} from '../Loader/Loader';
 
@@ -44,9 +44,15 @@ const ButtonStyle = styled.button`
   text-align: center;
   color: #ffffff;
 `;
-export const Button = ({loading, disabled, children}) => {
+
+type Props = {
+  loading: boolean;
+  disabled: boolean;
+  children: React.ReactNode;
+};
+export const Button: FC<Props> = ({loading, disabled, children}) => {
   return (
-    <ButtonStyle type="submit" disabled={disabled} loading={loading}>
+    <ButtonStyle type="submit" disabled={disabled}>
       {loading ? <Loader /> : children}
     </ButtonStyle>
   );

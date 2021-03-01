@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {FC} from 'react';
 import styled from 'styled-components';
 import smile from '../../../../assets/images/meh.svg';
 
@@ -15,9 +15,9 @@ const ErrorFormStyle = styled.div`
   .smile {
     position: relative;
     top: 5px;
-    img{
-        max-height: 20px;
-        max-width: 20px;
+    img {
+      max-height: 20px;
+      max-width: 20px;
     }
   }
   .info__error {
@@ -50,8 +50,11 @@ const ErrorFormStyle = styled.div`
     }
   }
 `;
+type Props = {
+  info: string;
+};
 
-export const ErrorForm = ({info}) => {
+export const ErrorForm: FC<Props> = ({info}) => {
   return (
     <>
       {info && (
