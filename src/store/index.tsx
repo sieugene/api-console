@@ -21,7 +21,10 @@ const bindMiddleware = (middleware: Middleware[]) => {
 };
 
 function configureStore(initialState = {}) {
-  const store: Store = createStore(
+  interface Stored extends Store {
+    runSagaTask: () => void;
+  }
+  const store: Stored = createStore(
     combineReducers({
       auth: persistReducer(persistConfig, rootReducer.auth),
     }),
@@ -31,11 +34,11 @@ function configureStore(initialState = {}) {
 
   let persistor = persistStore(store);
 
-  const runSagaTask = () => {
+  store.runSagaTask = () => {
     sagaMiddleware.run(rootSaga);
   };
 
-  runSagaTask();
+  store.runSagaTask();
   return {
     store,
     persistor,
