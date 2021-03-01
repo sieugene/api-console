@@ -7,7 +7,7 @@ import {authenticate} from '../store/actions/index';
 import {LoginForm} from '../components/Forms/LoginForm/LoginForm';
 
 import {AppState} from '../store/reducers';
-import {LoginValues} from '../components/Forms/types';
+import {LoginValues} from '../store/constants';
 
 const Wrapper = styled.div`
   height: 100%;

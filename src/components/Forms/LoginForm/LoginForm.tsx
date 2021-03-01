@@ -3,7 +3,7 @@ import {Form, Field} from 'react-final-form';
 import {Button} from '../../Button/Button';
 import styled from 'styled-components';
 import {ErrorForm} from './ErrorForm/ErrorForm';
-import {LoginValues} from '../types';
+import {LoginValues} from '../../../store/constants';
 
 const FormStyle = styled.section`
   width: 520px;

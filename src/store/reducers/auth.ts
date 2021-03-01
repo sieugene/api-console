@@ -1,6 +1,11 @@
-import {handleActions} from 'redux-actions';
-
-import {ActionTypes} from '../constants';
+import {
+  AUTHENTICATE,
+  AUTHENTICATE_FAIL,
+  AUTHENTICATE_LOGOUT,
+  AUTHENTICATE_SUCCESS,
+  AuthActions,
+  AUTHENTICATE_CHECK,
+} from './../constants/index';
 
 export type AuthState = {
   loading: boolean;
@@ -15,39 +20,44 @@ export const initialState: AuthState = {
   sublogin: null,
 };
 
-const AuthReducer = handleActions(
-  {
-    [ActionTypes.AUTHENTICATE]: (state) => {
+export const AuthReducer = (state = initialState, action: AuthActions): AuthState => {
+  switch (action.type) {
+    case AUTHENTICATE:
       return {
         ...state,
         loading: true,
       };
-    },
-    [ActionTypes.AUTHENTICATE_SUCCESS]: (state, {payload}) => {
+    case AUTHENTICATE_SUCCESS: {
       return {
         ...state,
         loading: false,
-        sessionKey: payload.sessionKey,
-        login: payload.login,
-        sublogin: payload.sublogin,
+        sessionKey: action.payload.sessionKey,
+        login: action.payload.login,
+        sublogin: action.payload.sublogin,
       };
-    },
-    [ActionTypes.AUTHENTICATE_FAILURE]: (state) => {
+    }
+    case AUTHENTICATE_FAIL:
       return {
         ...state,
         sessionKey: null,
         login: null,
         sublogin: null,
       };
-    },
-    [ActionTypes.LOGOUT]: (state) => {
+    case AUTHENTICATE_LOGOUT: {
       return {
         ...state,
         loading: false,
         sessionKey: null,
       };
-    },
-  },
-  initialState
-);
+    }
+    case AUTHENTICATE_CHECK: {
+      return state;
+    }
+    default:
+      // eslint-disable-next-line no-case-declarations
+      const x: never = action;
+      return state;
+  }
+};
+
 export default AuthReducer;

@@ -1,7 +1,7 @@
-import login from '../reducers/auth';
+import {AuthReducer} from './auth';
 
 const RootReducer = {
-  auth: login,
+  auth: AuthReducer,
 };
 export type AppState = {
   [T in keyof typeof RootReducer]: ReturnType<typeof RootReducer[keyof typeof RootReducer]>;

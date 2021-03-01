@@ -1,12 +1,14 @@
+import {AUTHENTICATE_CHECK, AUTHENTICATE_LOGOUT, AuthenticateAction} from './../constants/index';
 import {call, put} from 'redux-saga/effects';
 import {takeLatest, all} from '@redux-saga/core/effects';
+import {SagaIterator} from '@redux-saga/core';
 
 import api from '../../helpers/sendsay';
 
-import {ActionTypes} from '../constants';
 import {authenticateSuccess, authenticateFailure} from '../actions/auth';
+import {AUTHENTICATE} from '../constants';
 
-export function* authenticateCheckSaga() {
+export function* authenticateCheckSaga(): Generator {
   try {
     yield api.sendsay.request({
       action: 'pong',
@@ -18,7 +20,8 @@ export function* authenticateCheckSaga() {
   }
 }
 
-export function* authenticateSaga({payload}: any) {
+export function* authenticateSaga(data: AuthenticateAction): Generator {
+  const {payload} = data;
   yield api.sendsay
     .login({
       login: payload.login,
@@ -42,15 +45,15 @@ export function* authenticateSaga({payload}: any) {
   );
 }
 
-export function* logoutSaga() {
+export function* logoutSaga(): Generator {
   yield put(authenticateFailure());
   document.cookie = '';
 }
 
-export default function* root() {
+export default function* root(): SagaIterator {
   yield all([
-    takeLatest(ActionTypes.AUTHENTICATE, authenticateSaga),
-    takeLatest(ActionTypes.AUTHENTICATE_CHECK, authenticateCheckSaga),
-    takeLatest(ActionTypes.LOGOUT, logoutSaga),
+    takeLatest(AUTHENTICATE, authenticateSaga),
+    takeLatest(AUTHENTICATE_CHECK, authenticateCheckSaga),
+    takeLatest(AUTHENTICATE_LOGOUT, logoutSaga),
   ]);
 }
