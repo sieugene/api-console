@@ -1,6 +1,6 @@
 import React from 'react';
 import {Form, Field} from 'react-final-form';
-import {Button} from 'src/components/Button/Button';
+import {Button} from './../../Button/Button';
 import styled from 'styled-components';
 import {ErrorForm} from './ErrorForm/ErrorForm';
 

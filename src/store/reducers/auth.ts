@@ -1,8 +1,14 @@
 import {handleActions} from 'redux-actions';
 
-import {ActionTypes} from 'src/store/constants';
+import {ActionTypes} from '../constants';
 
-export const initialState = {
+export type AuthState = {
+  loading: boolean;
+  sessionKey: null | string;
+  login: null | string;
+  sublogin: null | string;
+};
+export const initialState: AuthState = {
   loading: false,
   sessionKey: null,
   login: null,

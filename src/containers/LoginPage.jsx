@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 import styled from 'styled-components';
 
-import {authenticate} from 'src/store/actions/auth';
+import {authenticate} from './../store/actions/index';
 import {LoginForm} from '../components/Forms/LoginForm/LoginForm';
 
 const Wrapper = styled.div`
