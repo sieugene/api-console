@@ -3,7 +3,7 @@ import {Form, Field} from 'react-final-form';
 import {Button} from '../../Button/Button';
 import styled from 'styled-components';
 import {ErrorForm} from './ErrorForm/ErrorForm';
-import {LoginValues} from '../../../store/constants';
+import {ErrorPayload, LoginValues} from '../../../store/constants';
 
 const FormStyle = styled.section`
   width: 520px;
@@ -45,7 +45,6 @@ const FieldBody = styled.div`
       color: #999999;
     }
   }
-
   input {
     background: #ffffff;
     border: ${(props: StyledProps) => (props.error ? '1px solid #CF2C00;' : '1px solid rgba(0, 0, 0, 0.2)')};
@@ -58,8 +57,16 @@ const FieldBody = styled.div`
     padding-right: 10px;
     box-sizing: border-box;
     &:focus {
-      outline: none;
+      outline: 0;
+      border: 2px solid rgba(0, 0, 0, 0.2);
     }
+    &:hover {
+      border: 1px solid rgba(0, 0, 0, 0.4);
+      cursor: pointer;
+    }
+
+    -webkit-box-shadow: inset 0 0 0 50px #fff;
+    -webkit-text-fill-color: #000;
 
     font-family: SF Pro Text;
     font-style: normal;
@@ -87,7 +94,7 @@ type Props = {
   validate: (values: LoginValues) => ErrorValues;
   loading: boolean;
   disabled: boolean;
-  requestError: string;
+  requestError: ErrorPayload | null;
 };
 
 export const LoginForm: FC<Props> = ({onSubmit, validate, loading, disabled, requestError}) => (

@@ -1,13 +1,12 @@
-import React, {FC, useCallback, useEffect, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {useHistory} from 'react-router-dom';
+import React, {FC, useCallback, useState} from 'react';
+import {useDispatch} from 'react-redux';
 import styled from 'styled-components';
 
 import {authenticate} from '../store/actions/index';
 import {LoginForm} from '../components/Forms/LoginForm/LoginForm';
 
-import {AppState} from '../store/reducers';
 import {LoginValues} from '../store/constants';
+import {useLoginForm} from '../components/Forms/LoginForm/hooks/useLoginForm';
 
 const Wrapper = styled.div`
   height: 100%;
@@ -22,18 +21,9 @@ const LogoStyled = styled.img`
 `;
 
 const LoginPage: FC = () => {
-  const history = useHistory();
-
   const dispatch = useDispatch();
-  const loading = useSelector((state: AppState) => state.auth.loading);
-  const isLoggedIn = useSelector((state: AppState) => !!state.auth.sessionKey?.length);
   const [disableForm, setdisableForm] = useState(false);
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      history.push('/console');
-    }
-  }, [isLoggedIn, history]);
+  const {isFetching, data, error} = useLoginForm();
 
   function onSubmit({login, sublogin, password}: LoginValues) {
     dispatch(
@@ -70,7 +60,7 @@ const LoginPage: FC = () => {
   return (
     <Wrapper>
       <LogoStyled src="/icons/logo.svg" alt="" />
-      <LoginForm onSubmit={onSubmit} validate={validate} loading={loading} disabled={disableForm} requestError={''} />
+      <LoginForm onSubmit={onSubmit} validate={validate} loading={isFetching} disabled={disableForm} requestError={error} />
     </Wrapper>
   );
 };

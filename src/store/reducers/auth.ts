@@ -5,6 +5,8 @@ import {
   AUTHENTICATE_SUCCESS,
   AuthActions,
   AUTHENTICATE_CHECK,
+  ErrorPayload,
+  AUTHENTICATE_STOP_FETCHING,
 } from './../constants/index';
 
 export type AuthState = {
@@ -12,12 +14,14 @@ export type AuthState = {
   sessionKey: null | string;
   login: null | string;
   sublogin: null | string;
+  error: ErrorPayload | null;
 };
 export const initialState: AuthState = {
   loading: false,
   sessionKey: null,
   login: null,
   sublogin: null,
+  error: null,
 };
 
 export const AuthReducer = (state = initialState, action: AuthActions): AuthState => {
@@ -30,7 +34,6 @@ export const AuthReducer = (state = initialState, action: AuthActions): AuthStat
     case AUTHENTICATE_SUCCESS: {
       return {
         ...state,
-        loading: false,
         sessionKey: action.payload.sessionKey,
         login: action.payload.login,
         sublogin: action.payload.sublogin,
@@ -42,16 +45,24 @@ export const AuthReducer = (state = initialState, action: AuthActions): AuthStat
         sessionKey: null,
         login: null,
         sublogin: null,
+        error: action?.payload ?? null,
       };
     case AUTHENTICATE_LOGOUT: {
       return {
         ...state,
-        loading: false,
         sessionKey: null,
       };
     }
     case AUTHENTICATE_CHECK: {
-      return state;
+      return {
+        ...state,
+      };
+    }
+    case AUTHENTICATE_STOP_FETCHING: {
+      return {
+        ...state,
+        loading: false,
+      };
     }
     default:
       // eslint-disable-next-line no-case-declarations

@@ -1,6 +1,7 @@
 import React, {FC} from 'react';
 import styled from 'styled-components';
 import smile from '../../../../assets/images/meh.svg';
+import {ErrorPayload} from '../../../../store/constants';
 
 const ErrorFormStyle = styled.div`
   background: rgba(207, 44, 0, 0.1);
@@ -51,7 +52,7 @@ const ErrorFormStyle = styled.div`
   }
 `;
 type Props = {
-  info: string;
+  info: ErrorPayload | null;
 };
 
 export const ErrorForm: FC<Props> = ({info}) => {
@@ -64,7 +65,7 @@ export const ErrorForm: FC<Props> = ({info}) => {
           </div>
           <div className="info__error">
             <h3 className="title">Вход не вышел</h3>
-            <p className="info">{info}</p>
+            <p className="info">{info && JSON.stringify({id: info?.id, explain: info?.explain})}</p>
           </div>
         </ErrorFormStyle>
       )}

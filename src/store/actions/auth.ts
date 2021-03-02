@@ -9,6 +9,8 @@ import {
   LoginValues,
   AuthenticateAction,
   AuthActions,
+  ErrorPayload,
+  AUTHENTICATE_STOP_FETCHING,
 } from './../constants/index';
 
 export function authenticate(payload: LoginValues): AuthenticateAction {
@@ -25,9 +27,10 @@ export function authenticateSuccess(payload: SuccessPayload): AuthenticateSucces
   };
 }
 
-export function authenticateFailure(): AuthActions {
+export function authenticateFailure(payload?: ErrorPayload): AuthActions {
   return {
     type: AUTHENTICATE_FAIL,
+    payload,
   };
 }
 
@@ -40,5 +43,11 @@ export function authenticateCheck(): AuthActions {
 export function logout(): AuthActions {
   return {
     type: AUTHENTICATE_LOGOUT,
+  };
+}
+
+export function stopFetching(): AuthActions {
+  return {
+    type: AUTHENTICATE_STOP_FETCHING,
   };
 }

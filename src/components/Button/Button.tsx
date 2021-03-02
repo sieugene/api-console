@@ -11,6 +11,7 @@ linear-gradient(180deg, #45a6ff 0%, #0055fb 100%), #c4c4c4`;
 const focusButton = 'linear-gradient(180deg, #45a6ff 0%, #0055fb 100%), #c4c4c4';
 
 const ButtonStyle = styled.button`
+  position: relative;
   background: ${normalButton};
   border-radius: 5px;
   height: 40px;
@@ -52,7 +53,7 @@ type Props = {
 };
 export const Button: FC<Props> = ({loading, disabled, children}) => {
   return (
-    <ButtonStyle type="submit" disabled={disabled}>
+    <ButtonStyle type="submit" disabled={disabled} onClick={(e) => (loading ? e.preventDefault() : e)}>
       {loading ? <Loader /> : children}
     </ButtonStyle>
   );
