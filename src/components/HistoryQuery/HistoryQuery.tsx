@@ -8,6 +8,7 @@ import {ConsoleState} from '../../store/reducers/console';
 const HistoryStyles = styled.div`
   display: flex;
   width: 100%;
+  height: 190px;
   overflow-x: scroll;
   padding-top: 10px;
   padding-bottom: 10px;
@@ -16,11 +17,9 @@ const HistoryStyles = styled.div`
   overflow-y: hidden;
   position: absolute;
   top: 50px;
-  background: #f6f6f6;
   ::-webkit-scrollbar {
     display: none;
   }
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 `;
 
 const Cross = styled.div`
@@ -45,12 +44,20 @@ const Cross = styled.div`
   }
 `;
 
-const Wrap = styled.div``;
+const Wrap = styled.div`
+  .background__overlay {
+    background: #f6f6f6;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    height: 50px;
+    position: relative;
+  }
+`;
 
 export const HistoryQuery = () => {
   const {data} = useSelector<AppState, ConsoleState>((state) => state.console);
   return (
     <Wrap>
+      <div className="background__overlay"></div>
       <HistoryStyles>
         {data.map((history) => (
           <HistoryItem data={history} key={history.id} />

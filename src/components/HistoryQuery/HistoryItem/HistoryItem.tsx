@@ -25,9 +25,9 @@ const HistoryItemStyle = styled.div`
   margin-right: 10px;
 `;
 const Wrapper = styled.div`
-  position: relative;
-  width: auto;
-  display: inline-block;
+  // position: absolute;
+  // width: auto;
+  // display: inline-block;
 `;
 
 const StatusColored = styled.div`
