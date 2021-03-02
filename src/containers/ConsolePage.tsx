@@ -3,6 +3,7 @@ import {useSelector} from 'react-redux';
 import {useHistory} from 'react-router-dom';
 
 import styled from 'styled-components';
+import {Console} from '../components/Console/Console';
 import {Header} from '../components/Header/Header';
 import {HistoryQuery} from '../components/HistoryQuery/HistoryQuery';
 import {AppState} from '../store/reducers';
@@ -28,6 +29,7 @@ const ConsolePage: FC = () => {
     <>
       <Header />
       <HistoryQuery />
+      <Console />
       <Wrapper>
         <h1>Welcome to console!</h1>
       </Wrapper>

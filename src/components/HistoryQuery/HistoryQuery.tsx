@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import {HistoryItem} from './HistoryItem/HistoryItem';
 
-const Wrapper = styled.div`
+const HistoryStyles = styled.div`
   display: flex;
   width: 100%;
   overflow-x: scroll;
@@ -21,7 +21,7 @@ const Wrapper = styled.div`
 `;
 
 const Cross = styled.div`
-  position: fixed;
+  position: absolute;
   right: -1px;
   cursor: pointer;
   background: #f6f6f6;
@@ -41,6 +41,8 @@ const Cross = styled.div`
     left: -15px;
   }
 `;
+
+const Wrap = styled.div``;
 
 export const HistoryQuery = () => {
   const historyData = [
@@ -136,14 +138,16 @@ export const HistoryQuery = () => {
     },
   ];
   return (
-    <Wrapper>
-      {historyData.map((history) => (
-        <HistoryItem data={history} key={history.id} />
-      ))}
+    <Wrap>
+      <HistoryStyles>
+        {historyData.map((history) => (
+          <HistoryItem data={history} key={history.id} />
+        ))}
+      </HistoryStyles>
       <Cross>
         <div className="shadow"></div>
         <img src="/icons/cross.svg" alt="cross" />
       </Cross>
-    </Wrapper>
+    </Wrap>
   );
 };

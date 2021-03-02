@@ -6,7 +6,7 @@ import {AuthState} from '../../store/reducers/auth';
 import {logout} from '../../store/actions/auth';
 
 const HeaderStyles = styled.div`
-  overflow: hidden;
+  // overflow: hidden;
   padding-top: 10px;
   padding-bottom: 10px;
   padding-left: 15px;
