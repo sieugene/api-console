@@ -1,6 +1,9 @@
 import React from 'react';
+import {useSelector} from 'react-redux';
 import styled from 'styled-components';
+import {AppState} from '../../store/reducers';
 import {HistoryItem} from './HistoryItem/HistoryItem';
+import {ConsoleState} from '../../store/reducers/console';
 
 const HistoryStyles = styled.div`
   display: flex;
@@ -45,102 +48,11 @@ const Cross = styled.div`
 const Wrap = styled.div``;
 
 export const HistoryQuery = () => {
-  const historyData = [
-    {
-      id: '1',
-      query: `{
-        "query": {
-          "action": "some",
-          "id": "23"
-        }
-      }`,
-      status: true,
-    },
-    {
-      id: '2',
-      query: `{
-        "query": {
-          "action": "some",
-          "id": "23"
-        }
-      }`,
-      status: false,
-    },
-    {
-      id: '3',
-      query: `{
-        "query": {
-          "action": "some",
-          "id": "23"
-        }
-      }`,
-      status: false,
-    },
-    {
-      id: '4',
-      query: `{
-        "query": {
-          "action": "some",
-          "id": "23"
-        }
-      }`,
-      status: true,
-    },
-    {
-      id: '5',
-      query: `{
-        "query": {
-          "action": "some",
-          "id": "23"
-        }
-      }`,
-      status: false,
-    },
-    {
-      id: '5',
-      query: `{
-        "query": {
-          "action": "some",
-          "id": "23"
-        }
-      }`,
-      status: false,
-    },
-    {
-      id: '5',
-      query: `{
-        "query": {
-          "action": "some",
-          "id": "23"
-        }
-      }`,
-      status: false,
-    },
-    {
-      id: '5',
-      query: `{
-        "query": {
-          "action": "some",
-          "id": "23"
-        }
-      }`,
-      status: false,
-    },
-    {
-      id: '5',
-      query: `{
-        "query": {
-          "action": "some",
-          "id": "23"
-        }
-      }`,
-      status: false,
-    },
-  ];
+  const {data} = useSelector<AppState, ConsoleState>((state) => state.console);
   return (
     <Wrap>
       <HistoryStyles>
-        {historyData.map((history) => (
+        {data.map((history) => (
           <HistoryItem data={history} key={history.id} />
         ))}
       </HistoryStyles>

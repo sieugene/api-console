@@ -30,9 +30,6 @@ const ConsolePage: FC = () => {
       <Header />
       <HistoryQuery />
       <Console />
-      <Wrapper>
-        <h1>Welcome to console!</h1>
-      </Wrapper>
     </>
   );
 };

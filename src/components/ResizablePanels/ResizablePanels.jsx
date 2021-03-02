@@ -53,7 +53,7 @@ export class ResizablePanels extends React.Component {
 
     this.state = {
       isDragging: false,
-      panels: [0, 900, 0],
+      panels: [0, Math.floor(window.innerWidth / 2), 0],
     };
   }
 
@@ -111,9 +111,9 @@ export class ResizablePanels extends React.Component {
                   onMouseDown={(e) => this.startResize(e, i + 1)}
                   key={'resizer_' + i}
                   style={this.state.currentPanel === i + 1 ? {left: this.state.delta} : {}}
-                  className="resizer"
+                  className={`resizer ${this.state.currentPanel === i + 1 ? ' active' : ''}`}
                 ></div>,
-                <div key={'panel_' + i} className="panel" style={{width: this.state.panels[i + 1]}}>
+                <div key={'panel_' + i} className={`panel`} style={{width: this.state.panels[i + 1]}}>
                   {child}
                 </div>,
               ];
