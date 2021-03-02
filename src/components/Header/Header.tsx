@@ -1,10 +1,12 @@
 import React from 'react';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components';
 import {AppState} from '../../store/reducers';
 import {AuthState} from '../../store/reducers/auth';
+import {logout} from '../../store/actions/auth';
 
 const HeaderStyles = styled.div`
+  overflow: hidden;
   padding-top: 10px;
   padding-bottom: 10px;
   padding-left: 15px;
@@ -105,6 +107,13 @@ const FullScreen = styled.img`
 
 export const Header = () => {
   const {login, sublogin} = useSelector<AppState, AuthState>((state) => state.auth);
+  const dispatch = useDispatch();
+  const userLogout = () => {
+    dispatch(logout());
+  };
+  const openInFullscreen = () => {
+    document.documentElement.requestFullscreen();
+  };
   return (
     <HeaderStyles>
       <div className="logo__header">
@@ -115,11 +124,11 @@ export const Header = () => {
         <div className="user-info">
           <div className="login">{login ?? ''}</div>:<div className="sublogin">{sublogin ?? 'sublogin'}</div>
         </div>
-        <div className="exit">
+        <div className="exit" onClick={userLogout}>
           Выйти
           <Exit src="/icons/log-out.svg" alt="logout" />
         </div>
-        <div className="fullscreen">
+        <div className="fullscreen" onClick={openInFullscreen}>
           <FullScreen src="/icons/full-screen.svg" alt="" />
         </div>
       </div>

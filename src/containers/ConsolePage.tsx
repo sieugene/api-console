@@ -4,6 +4,7 @@ import {useHistory} from 'react-router-dom';
 
 import styled from 'styled-components';
 import {Header} from '../components/Header/Header';
+import {HistoryQuery} from '../components/HistoryQuery/HistoryQuery';
 import {AppState} from '../store/reducers';
 import {isAuth} from '../store/reducers/auth';
 
@@ -26,6 +27,7 @@ const ConsolePage: FC = () => {
   return (
     <>
       <Header />
+      <HistoryQuery />
       <Wrapper>
         <h1>Welcome to console!</h1>
       </Wrapper>
