@@ -25,14 +25,13 @@ export function* authenticateCheckSaga(): Generator {
 export function* authenticateSaga(data: AuthenticateAction): Generator {
   const {payload} = data;
   try {
-    const result = yield api.sendsay.login({
+    yield api.sendsay.login({
       login: payload.login,
       sublogin: payload.sublogin,
       password: payload.password,
     });
 
     document.cookie = `sendsay_session=${api.sendsay.session}`;
-
     yield put(
       authenticateSuccess({
         sessionKey: api.sendsay.session,

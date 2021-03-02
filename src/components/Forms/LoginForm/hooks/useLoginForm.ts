@@ -1,17 +1,19 @@
 import {useHistory} from 'react-router-dom';
-import {AuthState} from './../../../../store/reducers/auth';
+import {AuthState, isAuth} from './../../../../store/reducers/auth';
 import {useEffect} from 'react';
 import {AppState} from '../../../../store/reducers';
 import {useSelector} from 'react-redux';
 
 export const useLoginForm = () => {
   const {loading, error, sessionKey, login, sublogin} = useSelector<AppState, AuthState>((state) => state.auth);
-  const isLoggedIn = !!sessionKey?.length;
+  const isLoggedIn = useSelector<AppState>((state) => isAuth(state));
 
   const history = useHistory();
   useEffect(() => {
     if (isLoggedIn) {
       history.push('/console');
+    } else {
+      history.push('/');
     }
   }, [isLoggedIn, history]);
 

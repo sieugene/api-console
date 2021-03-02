@@ -1,3 +1,6 @@
+/* Fonts */
+@import url('./stylesheet.css');
+
 * {
   box-sizing: border-box;
 }
@@ -6,20 +9,21 @@ html {
 }
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+    'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #E5E5E5;
+  background: #e5e5e5;
   height: 100%;
-  color: #0D0D0D;
+  color: #0d0d0d;
 }
 
-nav ul{
+nav ul {
   margin: 0;
   padding: 0;
   list-style: none;
 }
-#root{
+#root {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -27,8 +31,5 @@ nav ul{
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
-
-

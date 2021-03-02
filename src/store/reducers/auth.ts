@@ -1,3 +1,4 @@
+import {AppState} from '.';
 import {
   AUTHENTICATE,
   AUTHENTICATE_FAIL,
@@ -70,5 +71,8 @@ export const AuthReducer = (state = initialState, action: AuthActions): AuthStat
       return state;
   }
 };
+
+/* Selectors */
+export const isAuth = (state: AppState) => !!state.auth.sessionKey?.length;
 
 export default AuthReducer;

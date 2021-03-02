@@ -77,6 +77,14 @@ const FieldBody = styled.div`
     align-items: center;
     color: #0d0d0d;
   }
+  input[type='password'].fz__big {
+    font-size: 32px;
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill:focus {
+      font-size: 32px !important;
+    }
+  }
 `;
 
 type StyledProps = {
@@ -131,7 +139,7 @@ export const LoginForm: FC<Props> = ({onSubmit, validate, loading, disabled, req
             {({input, meta}) => (
               <FieldBody error={meta.touched && meta.error}>
                 <label>Пароль</label>
-                <input type="password" {...input} />
+                <input type="password" {...input} className="fz__big" />
               </FieldBody>
             )}
           </Field>
