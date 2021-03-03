@@ -1,3 +1,4 @@
+import {AppState} from '.';
 import {
   ConsoleActions,
   DELETE_HISTORY,
@@ -6,6 +7,8 @@ import {
   RUN_HISTORY,
   RUN_QUERY,
   SET_HISTORY,
+  SET_QUERY_TEXT,
+  SET_RESPONSE,
   START_FETCHING_QUERY,
   STOP_FETCHING_QUERY,
   SUCCESS_FETCHING_QUERY,
@@ -15,8 +18,11 @@ export type ConsoleState = {
   data: HistoryType[];
   loading: boolean;
   error: boolean;
+  query: string;
+  response: string;
 };
 export const initialState: ConsoleState = {
+  query: '',
   data: [
     // {
     //   id: '1',
@@ -25,92 +31,10 @@ export const initialState: ConsoleState = {
     //     "action": "some",
     //     "id": "23"
     //   }
-    // }`,
-    //   status: true,
-    // },
-    // {
-    //   id: '2',
-    //   query: `{
-    //   "query": {
-    //     "action": "some",
-    //     "id": "23"
-    //   }
-    // }`,
-    //   status: false,
-    // },
-    // {
-    //   id: '3',
-    //   query: `{
-    //   "query": {
-    //     "action": "some",
-    //     "id": "23"
-    //   }
-    // }`,
-    //   status: false,
-    // },
-    // {
-    //   id: '4',
-    //   query: `{
-    //   "query": {
-    //     "action": "some",
-    //     "id": "23"
-    //   }
-    // }`,
-    //   status: true,
-    // },
-    // {
-    //   id: '5',
-    //   query: `{
-    //   "query": {
-    //     "action": "some",
-    //     "id": "23"
-    //   }
-    // }`,
-    //   status: false,
-    // },
-    // {
-    //   id: '5',
-    //   query: `{
-    //   "query": {
-    //     "action": "some",
-    //     "id": "23"
-    //   }
-    // }`,
-    //   status: false,
-    // },
-    // {
-    //   id: '5',
-    //   query: `{
-    //   "query": {
-    //     "action": "some",
-    //     "id": "23"
-    //   }
-    // }`,
-    //   status: false,
-    // },
-    // {
-    //   id: '5',
-    //   query: `{
-    //   "query": {
-    //     "action": "some",
-    //     "id": "23"
-    //   }
-    // }`,
-    //   status: false,
-    // },
-    // {
-    //   id: '5',
-    //   query: `{
-    //   "query": {
-    //     "action": "some",
-    //     "id": "23"
-    //   }
-    // }`,
-    //   status: false,
-    // },
   ],
   loading: false,
   error: false,
+  response: '',
 };
 
 const arrayCopy = (arr: HistoryType[]): HistoryType[] => {
@@ -123,12 +47,18 @@ export const ConsoleReducer = (state = initialState, action: ConsoleActions): Co
     case SET_HISTORY:
       return {
         ...state,
-        data: [...state.data, action.payload],
+        data: [action.payload, ...state.data],
       };
     case DELETE_HISTORY: {
       return {
         ...state,
         data: arrayCopy(state.data).filter((history) => history.id !== action.payload.id),
+      };
+    }
+    case SET_QUERY_TEXT: {
+      return {
+        ...state,
+        query: action.payload,
       };
     }
     case RUN_HISTORY:
@@ -138,6 +68,12 @@ export const ConsoleReducer = (state = initialState, action: ConsoleActions): Co
     case RUN_QUERY: {
       return {
         ...state,
+      };
+    }
+    case SET_RESPONSE: {
+      return {
+        ...state,
+        response: action.payload,
       };
     }
     case START_FETCHING_QUERY: {
@@ -170,5 +106,8 @@ export const ConsoleReducer = (state = initialState, action: ConsoleActions): Co
       return state;
   }
 };
+
+/* Selectors */
+export const getHistory = (state: AppState, id: string) => state.console.data.find((history) => history.id === id);
 
 export default ConsoleReducer;

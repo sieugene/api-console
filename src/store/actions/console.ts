@@ -9,6 +9,9 @@ import {
   STOP_FETCHING_QUERY,
   ERROR_FETCHING_QUERY,
   SUCCESS_FETCHING_QUERY,
+  SET_QUERY_TEXT,
+  Query,
+  SET_RESPONSE,
 } from './../constants/console';
 
 export function setHistory(payload: HistoryType): ConsoleActions {
@@ -31,7 +34,20 @@ export function runHistory(payload: HistoryType): ConsoleActions {
   };
 }
 
-export function runQuery(payload: HistoryType): ConsoleActions {
+export function setReponse(payload: Query): ConsoleActions {
+  return {
+    type: SET_RESPONSE,
+    payload,
+  };
+}
+export function setQueryText(payload: Query): ConsoleActions {
+  return {
+    type: SET_QUERY_TEXT,
+    payload,
+  };
+}
+
+export function runQuery(payload: Query): ConsoleActions {
   return {
     type: RUN_QUERY,
     payload,

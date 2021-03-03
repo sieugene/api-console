@@ -3,7 +3,7 @@ import createSagaMiddleware from 'redux-saga';
 import {persistStore, persistReducer} from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
-import rootReducer from './reducers/index';
+import {RootReducer} from './reducers/index';
 import rootSaga from './sagas/index';
 
 const sagaMiddleware = createSagaMiddleware();
@@ -24,14 +24,9 @@ function configureStore(initialState = {}) {
   interface Stored extends Store {
     runSagaTask: () => void;
   }
-  const store: Stored = createStore(
-    combineReducers({
-      auth: persistReducer(persistConfig, rootReducer.auth),
-      console: persistReducer(persistConfig, rootReducer.console),
-    }),
-    initialState,
-    bindMiddleware([sagaMiddleware])
-  );
+  const persistedReducer = persistReducer(persistConfig, RootReducer);
+
+  const store: Stored = createStore(persistedReducer, bindMiddleware([sagaMiddleware]));
 
   let persistor = persistStore(store);
 

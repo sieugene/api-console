@@ -1,7 +1,10 @@
 import React, {FC, useState} from 'react';
+import {useDispatch} from 'react-redux';
 import styled from 'styled-components';
 import {HistoryDropdown} from '../HistoryDropdown/HistoryDropdown';
 import {NotificationCopy} from '../NotificationCopy/NotificationCopy';
+import {deleteHistory, runHistory} from '../../../store/actions/console';
+import {HistoryType} from '../../../store/constants/console';
 
 const HistoryItemStyle = styled.div`
   overflow: hidden;
@@ -43,19 +46,16 @@ const Dots = styled.img`
   cursor: pointer;
 `;
 type Props = {
-  data: {
-    query: string;
-    status: boolean;
-    id: string;
-  };
+  data: HistoryType;
 };
 export const HistoryItem: FC<Props> = ({data}) => {
+  const dispatch = useDispatch();
   const beautify = (query: string) => {
     const format = JSON.parse(query);
     return JSON.stringify(format, null, '\t');
   };
   const createNameQuery = (query: string) => {
-    return JSON.parse(query)?.query?.action ?? '';
+    return query ? JSON.parse(query)?.action ?? '' : '';
   };
 
   const [dropdown, setdropdown] = useState(false);
@@ -79,12 +79,12 @@ export const HistoryItem: FC<Props> = ({data}) => {
     }, 2600);
   };
   const deleteItem = () => {
-    console.log('was deleted');
+    dispatch(deleteHistory({id: data.id}));
     setdropdown(false);
   };
   const runItem = () => {
-    console.log('was run');
     setdropdown(false);
+    dispatch(runHistory(data));
   };
 
   return (

@@ -16,6 +16,18 @@ export type deleteHistoryAction = {
     id: string;
   };
 };
+export type Query = string;
+export const SET_QUERY_TEXT = 'SET_QUERY_TEXT';
+export type setQueryTextAction = {
+  type: typeof SET_QUERY_TEXT;
+  payload: Query;
+};
+
+export const SET_RESPONSE = 'SET_RESPONSE';
+export type setResponseAction = {
+  type: typeof SET_RESPONSE;
+  payload: Query;
+};
 
 export const RUN_HISTORY = 'RUN_HISTORY';
 export type runHistoryAction = {
@@ -26,7 +38,7 @@ export type runHistoryAction = {
 export const RUN_QUERY = 'RUN_QUERY';
 export type runQueryAction = {
   type: typeof RUN_QUERY;
-  payload: HistoryType;
+  payload: Query;
 };
 
 export const START_FETCHING_QUERY = 'START_FETCHING_QUERY';
@@ -57,4 +69,6 @@ export type ConsoleActions =
   | startFetchingQueryAction
   | stopFetchingQueryAction
   | errorFetchingQueryAction
-  | successFetchingQueryAction;
+  | successFetchingQueryAction
+  | setQueryTextAction
+  | setResponseAction;

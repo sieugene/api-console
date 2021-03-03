@@ -1,12 +1,14 @@
-import {ConsoleReducer} from './console';
-import {AuthReducer} from './auth';
+import {combineReducers} from 'redux';
+import {ConsoleReducer as console} from './console';
+import {AuthReducer as auth} from './auth';
 
-const RootReducer = {
-  auth: AuthReducer,
-  console: ConsoleReducer,
-};
-export type AppState = {
-  [T in keyof typeof RootReducer]: ReturnType<typeof RootReducer[T]>;
-};
+// export type AppState = {
+//   [T in keyof typeof RootReducer]: ReturnType<typeof RootReducer[T]>;
+// };
 
-export default RootReducer;
+export const RootReducer = combineReducers({
+  auth,
+  console,
+});
+
+export type AppState = ReturnType<typeof RootReducer>;

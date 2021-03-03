@@ -1,11 +1,14 @@
 import React from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components';
+import {setQueryText, runQuery} from '../../store/actions/console';
+import {AppState} from '../../store/reducers';
+import {ConsoleState} from '../../store/reducers/console';
 import {Button} from '../Button/Button';
 import {ResizablePanels} from '../ResizablePanels/ResizablePanels';
 
 const ConsoleWrap = styled.div`
   background: #ffffff;
-  margin-top: 50px;
   padding: 15px;
   .panel {
     border: none;
@@ -14,6 +17,7 @@ const ConsoleWrap = styled.div`
     box-sizing: border-box;
     box-shadow: ${(props: {error: boolean}) => (props.error ? '0px 0px 5px rgba(207, 44, 0, 0.5)' : 'none')};
     border-radius: 5px;
+    padding: 0px;
   }
   .resizer {
     background: none;
@@ -22,22 +26,26 @@ const ConsoleWrap = styled.div`
     background: #e6e6e6;
   }
   width: 100%;
-`;
-
-const QueryTextArea = styled.textarea`
-  resize: none;
-  border: none;
-  height: 100%;
-  width: 100%;
-  &:focus {
-    outline: none;
+  .query-textarea {
+    resize: none;
+    border: none;
+    height: 100%;
+    width: 100%;
+    padding: 10px;
+    margin: 0;
+    &:focus {
+      outline: none;
+    }
   }
 `;
+
 const ResponseTextArea = styled.textarea`
   resize: none;
   border: none;
   height: 100%;
   width: 100%;
+  padding: 10px;
+  margin: 0;
   &:focus {
     outline: none;
   }
@@ -80,21 +88,27 @@ const Format = styled.img`
 `;
 
 export const Console = () => {
-  const execute = () => {
-    console.log('run');
+  const dispatch = useDispatch();
+  const {query, error, loading, response} = useSelector<AppState, ConsoleState>((state) => state.console);
+
+  const queryOnchange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    dispatch(setQueryText(e.currentTarget.value));
   };
-  const error = false;
+  const execute = () => {
+    dispatch(runQuery(query));
+  };
+
   return (
     <>
       <ConsoleWrap error={error}>
         <ResizablePanels>
-          <QueryTextArea>This is the first panel. It will use the rest of the available space.</QueryTextArea>
-          <ResponseTextArea>This is the second panel. Starts with 300px.</ResponseTextArea>
+          <textarea className="query-textarea" onChange={queryOnchange} value={query} defaultValue="{}"></textarea>
+          <ResponseTextArea defaultValue="{}" value={response} />
         </ResizablePanels>
       </ConsoleWrap>
       <FooterStyle>
         <div onClick={execute}>
-          <Button loading={false} disabled={false}>
+          <Button loading={loading} disabled={loading}>
             Отправить
           </Button>
         </div>
