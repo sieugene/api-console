@@ -32,7 +32,7 @@ const Cross = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  top: 51px;
+  top: 50px;
   .shadow {
     border-right: 1px solid #c4c4c4;
     height: 49px;
@@ -53,15 +53,18 @@ const Wrap = styled.div`
   }
 `;
 
-export const HistoryQuery = () => {
+export const HistoryQuery = ({max = 15}) => {
   const {data} = useSelector<AppState, ConsoleState>((state) => state.console);
+  const length = data.length > max ? max : data.length;
   return (
     <Wrap>
       <div className="background__overlay"></div>
       <HistoryStyles>
-        {data.map((history, index) => (
-          <HistoryItem data={history} key={history.id} isLast={data.length === index + 1} />
-        ))}
+        {data.map((history, index) => {
+          if (index + 1 <= max) {
+            return <HistoryItem data={history} key={history.id} isLast={length === index + 1} />;
+          }
+        })}
       </HistoryStyles>
       <Cross>
         <div className="shadow"></div>

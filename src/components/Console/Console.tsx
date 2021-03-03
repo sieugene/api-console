@@ -7,6 +7,8 @@ import {ConsoleState} from '../../store/reducers/console';
 import {Button} from '../Button/Button';
 import {ResizablePanels} from '../ResizablePanels/ResizablePanels';
 
+import {ReactComponent as FormatIcon} from './icons/format.svg';
+
 const ConsoleWrap = styled.div`
   background: #ffffff;
   padding: 15px;
@@ -22,6 +24,7 @@ const ConsoleWrap = styled.div`
     box-shadow: ${(props: {error: boolean}) => (props.error ? '0px 0px 5px rgba(207, 44, 0, 0.5)' : 'none')};
     border-radius: 5px;
     padding: 0px;
+    height: 75vh;
   }
   .resizer {
     background: none;
@@ -62,7 +65,8 @@ const FooterStyle = styled.div`
   align-items: center;
   background: #ffffff;
   padding: 15px;
-  .link {
+  .link a {
+    text-decoration: none;
     font-family: SF Pro Text;
     font-style: normal;
     font-weight: normal;
@@ -84,11 +88,21 @@ const FooterStyle = styled.div`
     display: flex;
     align-items: center;
     color: #0d0d0d;
+    &:focus {
+      border: 2px solid #45a5ff;
+    }
+    &:hover {
+      color: #0055fb;
+      .format-icon {
+        path {
+          stroke: #0055fb;
+        }
+      }
+    }
+    .format-icon {
+      margin-right: 11px;
+    }
   }
-`;
-
-const Format = styled.img`
-  margin-right: 11px;
 `;
 
 export const Console = () => {
@@ -117,9 +131,13 @@ export const Console = () => {
           </Button>
         </div>
 
-        <div className="link">@test</div>
+        <div className="link">
+          <a href="https://github.com/sieugene" target="_blank" rel="noreferrer">
+            @sieugene
+          </a>
+        </div>
         <div className="format">
-          <Format src="/icons/format.svg" alt="" />
+          <FormatIcon className="format-icon" />
           Форматировать
         </div>
       </FooterStyle>
