@@ -58,9 +58,10 @@ export class ResizablePanels extends React.Component {
   }
 
   componentDidMount() {
-    ReactDOM.findDOMNode(this).addEventListener('mousemove', this.resizePanel);
-    ReactDOM.findDOMNode(this).addEventListener('mouseup', this.stopResize);
-    ReactDOM.findDOMNode(this).addEventListener('mouseleave', this.stopResize);
+    // No use in strict mode!
+    // ReactDOM.findDOMNode(this).addEventListener('mousemove', this.resizePanel);
+    // ReactDOM.findDOMNode(this).addEventListener('mouseup', this.stopResize);
+    // ReactDOM.findDOMNode(this).addEventListener('mouseleave', this.stopResize);
   }
 
   startResize = (event, index) => {
@@ -73,7 +74,6 @@ export class ResizablePanels extends React.Component {
 
   stopResize = () => {
     if (this.state.isDragging) {
-      console.log(this.state);
       this.setState(({panels, currentPanel, delta}) => ({
         isDragging: false,
         panels: {
@@ -99,7 +99,7 @@ export class ResizablePanels extends React.Component {
   render() {
     const rest = this.props.children.slice(1);
     return (
-      <ResizableStyles>
+      <ResizableStyles onMouseMove={this.resizePanel} onMouseUp={this.stopResize} onMouseLeave={this.stopResize}>
         <div className="panel-container" onMouseUp={() => this.stopResize()}>
           <div className="panel" style={{width: `calc(100% - ${this.state.panels[1]}px - ${this.state.panels[2]}px)`}}>
             {this.props.children[0]}

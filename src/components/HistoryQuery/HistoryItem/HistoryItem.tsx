@@ -51,10 +51,7 @@ type Props = {
 };
 export const HistoryItem: FC<Props> = ({data, isLast}) => {
   const dispatch = useDispatch();
-  const beautify = (query: string) => {
-    const format = JSON.parse(query);
-    return JSON.stringify(format, null, '\t');
-  };
+
   const createNameQuery = (query: string) => {
     return query ? JSON.parse(query)?.action ?? '' : '';
   };
@@ -76,7 +73,6 @@ export const HistoryItem: FC<Props> = ({data, isLast}) => {
   const animate = () => {
     return setTimeout(() => {
       offNotificate();
-      console.log('steal worked!');
     }, 2600);
   };
   const deleteItem = () => {

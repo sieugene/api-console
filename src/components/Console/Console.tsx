@@ -1,7 +1,7 @@
 import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components';
-import {setQueryText, runQuery} from '../../store/actions/console';
+import {setQueryText, runQuery, formatText} from '../../store/actions/console';
 import {AppState} from '../../store/reducers';
 import {ConsoleState} from '../../store/reducers/console';
 import {Button} from '../Button/Button';
@@ -76,6 +76,14 @@ const FooterStyle = styled.div`
     display: flex;
     align-items: center;
     color: #999999;
+
+    -webkit-transition: color1s;
+    -moz-transition: color 1s;
+    -o-transition: color 1s;
+    transition: color 1s;
+    &:hover {
+      color: #676761;
+    }
   }
   .format {
     cursor: pointer;
@@ -115,13 +123,16 @@ export const Console = () => {
   const execute = () => {
     dispatch(runQuery(query));
   };
+  const beautify = () => {
+    dispatch(formatText());
+  };
 
   return (
     <>
       <ConsoleWrap error={error}>
         <ResizablePanels>
-          <textarea className="query-textarea" onChange={queryOnchange} value={query} defaultValue="{}"></textarea>
-          <ResponseTextArea defaultValue="{}" value={response} />
+          <textarea className="query-textarea" onChange={queryOnchange} value={query ?? '{}'} defaultValue="{}"></textarea>
+          <ResponseTextArea defaultValue="{}" value={response} readOnly={true} />
         </ResizablePanels>
       </ConsoleWrap>
       <FooterStyle>
@@ -136,7 +147,7 @@ export const Console = () => {
             @sieugene
           </a>
         </div>
-        <div className="format">
+        <div className="format" onClick={beautify}>
           <FormatIcon className="format-icon" />
           Форматировать
         </div>

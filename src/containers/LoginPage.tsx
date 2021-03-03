@@ -23,7 +23,7 @@ const LogoStyled = styled.img`
 const LoginPage: FC = () => {
   const dispatch = useDispatch();
   const [disableForm, setdisableForm] = useState(false);
-  const {isFetching, data, error} = useLoginForm();
+  const {isFetching, error} = useLoginForm();
 
   function onSubmit({login, sublogin, password}: LoginValues) {
     dispatch(

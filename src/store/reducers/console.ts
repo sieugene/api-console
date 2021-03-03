@@ -1,8 +1,10 @@
 import {AppState} from '.';
 import {
+  CLEAR_HISTORY,
   ConsoleActions,
   DELETE_HISTORY,
   ERROR_FETCHING_QUERY,
+  FORMAT_TEXT,
   HistoryType,
   RUN_HISTORY,
   RUN_QUERY,
@@ -23,15 +25,7 @@ export type ConsoleState = {
 };
 export const initialState: ConsoleState = {
   query: '',
-  data: [
-    // {
-    //   id: '1',
-    //   query: `{
-    //   "query": {
-    //     "action": "some",
-    //     "id": "23"
-    //   }
-  ],
+  data: [],
   loading: false,
   error: false,
   response: '',
@@ -100,8 +94,20 @@ export const ConsoleReducer = (state = initialState, action: ConsoleActions): Co
         error: false,
       };
     }
+    case CLEAR_HISTORY: {
+      return {
+        ...state,
+        data: [],
+      };
+    }
+    case FORMAT_TEXT: {
+      return {
+        ...state,
+      };
+    }
     default:
-      // eslint-disable-next-line no-case-declarations
+      // for checkout all uses actions
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const x: never = action;
       return state;
   }

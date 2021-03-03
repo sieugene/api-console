@@ -12,6 +12,8 @@ import {
   SET_QUERY_TEXT,
   Query,
   SET_RESPONSE,
+  CLEAR_HISTORY,
+  FORMAT_TEXT,
 } from './../constants/console';
 
 export function setHistory(payload: HistoryType): ConsoleActions {
@@ -75,5 +77,17 @@ export function errorFetchingQuery(): ConsoleActions {
 export function successFetchingQuery(): ConsoleActions {
   return {
     type: SUCCESS_FETCHING_QUERY,
+  };
+}
+
+export function clearHistory(): ConsoleActions {
+  return {
+    type: CLEAR_HISTORY,
+  };
+}
+
+export function formatText(): ConsoleActions {
+  return {
+    type: FORMAT_TEXT,
   };
 }

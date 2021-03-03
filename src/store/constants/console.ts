@@ -16,6 +16,12 @@ export type deleteHistoryAction = {
     id: string;
   };
 };
+
+export const CLEAR_HISTORY = 'CLEAR_HISTORY';
+export type clearHistoryAction = {
+  type: typeof CLEAR_HISTORY;
+};
+
 export type Query = string;
 export const SET_QUERY_TEXT = 'SET_QUERY_TEXT';
 export type setQueryTextAction = {
@@ -61,6 +67,11 @@ export type successFetchingQueryAction = {
   type: typeof SUCCESS_FETCHING_QUERY;
 };
 
+export const FORMAT_TEXT = 'FORMAT_TEXT';
+export type formatTextAction = {
+  type: typeof FORMAT_TEXT;
+};
+
 export type ConsoleActions =
   | setHistoryAction
   | deleteHistoryAction
@@ -71,4 +82,6 @@ export type ConsoleActions =
   | errorFetchingQueryAction
   | successFetchingQueryAction
   | setQueryTextAction
-  | setResponseAction;
+  | setResponseAction
+  | clearHistoryAction
+  | formatTextAction;

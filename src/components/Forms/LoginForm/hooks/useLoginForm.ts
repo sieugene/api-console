@@ -5,7 +5,7 @@ import {AppState} from '../../../../store/reducers';
 import {useSelector} from 'react-redux';
 
 export const useLoginForm = () => {
-  const {loading, error, sessionKey, login, sublogin} = useSelector<AppState, AuthState>((state) => state.auth);
+  const {loading, error, login, sublogin} = useSelector<AppState, AuthState>((state) => state.auth);
   const isLoggedIn = useSelector<AppState>((state) => isAuth(state));
 
   const history = useHistory();

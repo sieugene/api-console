@@ -1,9 +1,10 @@
 import React from 'react';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components';
 import {AppState} from '../../store/reducers';
 import {HistoryItem} from './HistoryItem/HistoryItem';
 import {ConsoleState} from '../../store/reducers/console';
+import {clearHistory} from '../../store/actions/console';
 
 const HistoryStyles = styled.div`
   display: flex;
@@ -54,21 +55,21 @@ const Wrap = styled.div`
 `;
 
 export const HistoryQuery = ({max = 15}) => {
+  const dispatch = useDispatch();
   const {data} = useSelector<AppState, ConsoleState>((state) => state.console);
   const length = data.length > max ? max : data.length;
+  const clear = () => {
+    dispatch(clearHistory());
+  };
   return (
     <Wrap>
       <div className="background__overlay"></div>
       <HistoryStyles>
-        {data.map((history, index) => {
-          if (index + 1 <= max) {
-            return <HistoryItem data={history} key={history.id} isLast={length === index + 1} />;
-          }
-        })}
+        {data.map((history, index) => index + 1 <= max && <HistoryItem data={history} key={history.id} isLast={length === index + 1} />)}
       </HistoryStyles>
       <Cross>
         <div className="shadow"></div>
-        <img src="/icons/cross.svg" alt="cross" />
+        <img src="/icons/cross.svg" alt="cross" onClick={clear} />
       </Cross>
     </Wrap>
   );

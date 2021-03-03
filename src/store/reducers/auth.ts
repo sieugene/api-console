@@ -66,7 +66,8 @@ export const AuthReducer = (state = initialState, action: AuthActions): AuthStat
       };
     }
     default:
-      // eslint-disable-next-line no-case-declarations
+      // for checkout all uses actions
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const x: never = action;
       return state;
   }
