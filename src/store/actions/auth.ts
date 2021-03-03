@@ -34,9 +34,10 @@ export function authenticateFailure(payload?: ErrorPayload): AuthActions {
   };
 }
 
-export function authenticateCheck(): AuthActions {
+export function authenticateCheck(payload: {history: any}): AuthActions {
   return {
     type: AUTHENTICATE_CHECK,
+    payload,
   };
 }
 

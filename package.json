@@ -12,8 +12,7 @@
     "@types/react": "^17.0.2",
     "@types/react-dom": "^17.0.1",
     "final-form": "^4.20.1",
-    "jsoneditor": "^9.0.0",
-    "jsoneditor-react": "^3.0.0",
+    "js-cookie": "^2.2.1",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -54,7 +53,7 @@
     ]
   },
   "devDependencies": {
-    "@types/fbjs": "^3.0.0",
+    "@types/js-cookie": "^2.2.6",
     "@types/react-redux": "^7.1.16",
     "@types/react-router-dom": "^5.1.7",
     "@types/redux-actions": "^2.6.1",

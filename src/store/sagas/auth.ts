@@ -1,22 +1,26 @@
-import {AUTHENTICATE_CHECK, AUTHENTICATE_LOGOUT, AuthenticateAction} from './../constants/index';
+import {AUTHENTICATE_CHECK, AUTHENTICATE_LOGOUT, AuthenticateAction, AuthenticateCheckAction} from './../constants/index';
 import {call, put} from 'redux-saga/effects';
 import {takeLatest, all} from '@redux-saga/core/effects';
 import {SagaIterator} from '@redux-saga/core';
+import Cookies from 'js-cookie';
 
 import api from '../../helpers/sendsay';
 
 import {authenticateSuccess, authenticateFailure, stopFetching} from '../actions/auth';
 import {AUTHENTICATE} from '../constants';
 
-export function* authenticateCheckSaga(): Generator {
+export function* authenticateCheckSaga(action: AuthenticateCheckAction): Generator {
+  const {payload} = action;
   try {
     yield api.sendsay.request({
       action: 'pong',
     });
+    payload.history.push('/console');
   } catch (error) {
     if (error.id === 'error/auth/failed') {
       yield call(logoutSaga);
     }
+    payload.history.push('/');
   } finally {
     yield put(stopFetching());
   }
@@ -31,7 +35,7 @@ export function* authenticateSaga(data: AuthenticateAction): Generator {
       password: payload.password,
     });
 
-    document.cookie = `sendsay_session=${api.sendsay.session}`;
+    Cookies.set('sendsay_session', api.sendsay.session);
     yield put(
       authenticateSuccess({
         sessionKey: api.sendsay.session,
@@ -40,7 +44,7 @@ export function* authenticateSaga(data: AuthenticateAction): Generator {
       })
     );
   } catch (error) {
-    document.cookie = '';
+    Cookies.remove('sendsay_session');
     yield put(authenticateFailure(error));
   } finally {
     yield put(stopFetching());
@@ -48,8 +52,8 @@ export function* authenticateSaga(data: AuthenticateAction): Generator {
 }
 
 export function* logoutSaga(): Generator {
+  yield Cookies.remove('sendsay_session');
   yield put(authenticateFailure());
-  document.cookie = '';
   yield put(stopFetching());
 }
 

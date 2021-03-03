@@ -23,6 +23,7 @@ export type AuthenticateSuccessAction = {
 export const AUTHENTICATE_CHECK = 'AUTHENTICATE_CHECK';
 export type AuthenticateCheckAction = {
   type: typeof AUTHENTICATE_CHECK;
+  payload: {history: any};
 };
 
 export type ErrorPayload = {
