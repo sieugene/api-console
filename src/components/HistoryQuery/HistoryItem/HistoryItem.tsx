@@ -13,7 +13,9 @@ const HistoryItemStyle = styled.div`
   background: #ffffff;
   box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
-  width: 133px;
+  min-width: 133px;
+  white-space: nowrap;
+  word-wrap:break-word
   height: 30px;
   padding-top: 5px;
   padding-bottom: 5px;
@@ -28,9 +30,7 @@ const HistoryItemStyle = styled.div`
   margin-right: 10px;
 `;
 const Wrapper = styled.div`
-  // position: absolute;
-  // width: auto;
-  // display: inline-block;
+  padding-right: ${(props: {isLast: boolean}) => (props.isLast ? `50px` : `0px`)};
 `;
 
 const StatusColored = styled.div`
@@ -47,8 +47,9 @@ const Dots = styled.img`
 `;
 type Props = {
   data: HistoryType;
+  isLast: boolean;
 };
-export const HistoryItem: FC<Props> = ({data}) => {
+export const HistoryItem: FC<Props> = ({data, isLast}) => {
   const dispatch = useDispatch();
   const beautify = (query: string) => {
     const format = JSON.parse(query);
@@ -88,7 +89,7 @@ export const HistoryItem: FC<Props> = ({data}) => {
   };
 
   return (
-    <Wrapper>
+    <Wrapper isLast={isLast}>
       <HistoryItemStyle>
         {notificate && <NotificationCopy unsubNotificate={animate} reset={offNotificate} />}
         <StatusColored color={data.status ? 'green' : 'red'} />

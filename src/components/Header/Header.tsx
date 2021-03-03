@@ -1,9 +1,13 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components';
 import {AppState} from '../../store/reducers';
 import {AuthState} from '../../store/reducers/auth';
 import {logout} from '../../store/actions/auth';
+import {exitFullScreen, isInFullScreen, requestFullScreen} from './fullscreen';
+
+import {ReactComponent as FullScreenIcon} from './icons/full-screen.svg';
+import {ReactComponent as FullScreenExitIcon} from './icons/full-screen-exit.svg';
 
 const HeaderStyles = styled.div`
   // overflow: hidden;
@@ -79,9 +83,20 @@ const HeaderStyles = styled.div`
       align-items: center;
       color: #0d0d0d;
     }
-    .fullscreen {
+    .fullscreen-wrap {
       display: flex;
       align-items: center;
+      .fullscreen {
+        margin-left: 33px;
+        max-width: 18px;
+        max-height: 18px;
+        cursor: pointer;
+        &:hover {
+          path {
+            stroke: #0055fb;
+          }
+        }
+      }
     }
   }
 `;
@@ -98,21 +113,21 @@ const Exit = styled.img`
   max-height: 24px;
 `;
 
-const FullScreen = styled.img`
-  margin-left: 33px;
-  max-width: 18px;
-  max-height: 18px;
-  cursor: pointer;
-`;
-
 export const Header = () => {
   const {login, sublogin} = useSelector<AppState, AuthState>((state) => state.auth);
+  const [isFullscreen, setisFullscreen] = useState(false);
   const dispatch = useDispatch();
   const userLogout = () => {
     dispatch(logout());
   };
   const openInFullscreen = () => {
-    document.documentElement.requestFullscreen();
+    if (isInFullScreen()) {
+      exitFullScreen();
+      setisFullscreen(false);
+    } else {
+      requestFullScreen(document.documentElement);
+      setisFullscreen(true);
+    }
   };
   return (
     <HeaderStyles>
@@ -128,8 +143,8 @@ export const Header = () => {
           Выйти
           <Exit src="/icons/log-out.svg" alt="logout" />
         </div>
-        <div className="fullscreen" onClick={openInFullscreen}>
-          <FullScreen src="/icons/full-screen.svg" alt="" />
+        <div className="fullscreen-wrap" onClick={openInFullscreen}>
+          {!isFullscreen ? <FullScreenIcon className="fullscreen" /> : <FullScreenExitIcon className="fullscreen" />}
         </div>
       </div>
     </HeaderStyles>

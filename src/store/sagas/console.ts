@@ -5,7 +5,15 @@ import {SagaIterator} from '@redux-saga/core';
 import api from '../../helpers/sendsay';
 
 import {RUN_QUERY, runQueryAction, HistoryType, Query, runHistoryAction, RUN_HISTORY} from '../constants/console';
-import {startFetchingQuery, stopFetchingQuery, errorFetchingQuery, successFetchingQuery, setHistory, setReponse} from '../actions/console';
+import {
+  startFetchingQuery,
+  stopFetchingQuery,
+  errorFetchingQuery,
+  successFetchingQuery,
+  setHistory,
+  setReponse,
+  setQueryText,
+} from '../actions/console';
 
 // Utils
 import {v4 as uuidv4} from 'uuid';
@@ -47,6 +55,7 @@ export function* runQuerySaga(action: runQueryAction): Generator {
 export function* runHistorySaga(action: runHistoryAction): Generator {
   const {payload} = action;
   const format = fromJsonToObj(payload.query);
+  yield put(setQueryText(payload.query));
   try {
     yield put(startFetchingQuery());
     const result = yield api.sendsay.request({

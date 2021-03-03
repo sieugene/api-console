@@ -8,7 +8,7 @@ import {ConsoleState} from '../../store/reducers/console';
 const HistoryStyles = styled.div`
   display: flex;
   width: 100%;
-  height: 190px;
+  height: 209px;
   overflow-x: scroll;
   padding-top: 10px;
   padding-bottom: 10px;
@@ -59,8 +59,8 @@ export const HistoryQuery = () => {
     <Wrap>
       <div className="background__overlay"></div>
       <HistoryStyles>
-        {data.map((history) => (
-          <HistoryItem data={history} key={history.id} />
+        {data.map((history, index) => (
+          <HistoryItem data={history} key={history.id} isLast={data.length === index + 1} />
         ))}
       </HistoryStyles>
       <Cross>

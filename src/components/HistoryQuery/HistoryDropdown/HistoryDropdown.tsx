@@ -6,7 +6,7 @@ const Dropdown = styled.div`
   box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
   border-radius: 3px;
   width: 133px;
-  height: 141px;
+  height: 150px;
   padding: 15px;
   padding-left: 0px;
   padding-right: 0px;
@@ -27,6 +27,14 @@ const Dropdown = styled.div`
     padding-left: 15px;
     padding-right: 15px;
     cursor: pointer;
+  }
+  .line {
+    width: 100%;
+    height: 1px;
+    background: rgba(0, 0, 0, 0.2);
+    display: block;
+    margin-bottom: 5px;
+    margin-top: 5px;
   }
   .delete {
     &:hover {
@@ -60,6 +68,7 @@ export const HistoryDropdown: FC<Props> = ({open, copy, run, deleteItem}) => {
           <div className="copy" onClick={copy}>
             Копировать
           </div>
+          <span className="line"></span>
           <div className="delete" onClick={deleteItem}>
             Удалить
           </div>
