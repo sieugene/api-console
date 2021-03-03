@@ -11,6 +11,7 @@ const Dropdown = styled.div`
   padding-left: 0px;
   padding-right: 0px;
   position: relative;
+  z-index: 2;
   .run,
   .copy,
   .delete {

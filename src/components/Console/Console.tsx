@@ -10,6 +10,10 @@ import {ResizablePanels} from '../ResizablePanels/ResizablePanels';
 const ConsoleWrap = styled.div`
   background: #ffffff;
   padding: 15px;
+  .panel-container {
+    position: relative;
+    z-index: 1;
+  }
   .panel {
     border: none;
     background: #ffffff;
