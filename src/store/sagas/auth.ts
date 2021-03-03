@@ -55,6 +55,7 @@ export function* logoutSaga(): Generator {
   yield Cookies.remove('sendsay_session');
   yield put(authenticateFailure());
   yield put(stopFetching());
+  // if need clear history, put clearHistory()
 }
 
 export default function* root(): SagaIterator {

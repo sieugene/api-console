@@ -25,7 +25,7 @@ const HistoryStyles = styled.div`
 
 const Cross = styled.div`
   position: absolute;
-  right: -1px;
+  right: 0px;
   cursor: pointer;
   background: #f6f6f6;
   width: 51px;

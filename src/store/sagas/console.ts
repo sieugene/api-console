@@ -82,11 +82,9 @@ export function* runHistorySaga(action: runHistoryAction): Generator {
         ...format,
       });
       yield put(setReponse(toJSON(result as Promise<object>)));
-      // yield put(setHistory(createQueryHistory(format, false)));
       yield put(successFetchingQuery());
     } catch (error) {
       yield put(setReponse(toJSON(error)));
-      // yield put(setHistory(createQueryHistory(format, true)));
       yield put(errorFetchingQuery());
     } finally {
       yield put(stopFetchingQuery());
