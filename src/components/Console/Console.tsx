@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components';
-import {setQueryText, runQuery, formatText} from '../../store/actions/console';
+import {runQuery} from '../../store/actions/console';
 import {AppState} from '../../store/reducers';
 import {ConsoleState} from '../../store/reducers/console';
 import {Button} from '../Button/Button';
+import {JsonEditor} from '../JsonEditor/JsonEditor';
 import {ResizablePanels} from '../ResizablePanels/ResizablePanels';
 
 import {ReactComponent as FormatIcon} from './icons/format.svg';
@@ -19,9 +20,9 @@ const ConsoleWrap = styled.div`
   .panel {
     border: none;
     background: #ffffff;
-    border: ${(props: {error: boolean}) => (props.error ? '1px solid #CF2C00' : '1px solid rgba(0, 0, 0, 0.2)')};
+    border: ${(props: {error: boolean; isbeatify: boolean}) => (props.error ? '1px solid #CF2C00' : '1px solid rgba(0, 0, 0, 0.2)')};
     box-sizing: border-box;
-    box-shadow: ${(props: {error: boolean}) => (props.error ? '0px 0px 5px rgba(207, 44, 0, 0.5)' : 'none')};
+    box-shadow: ${(props) => (props.error ? '0px 0px 5px rgba(207, 44, 0, 0.5)' : 'none')};
     border-radius: 5px;
     padding: 0px;
     height: 75vh;
@@ -33,28 +34,15 @@ const ConsoleWrap = styled.div`
     background: #e6e6e6;
   }
   width: 100%;
-  .query-textarea {
-    resize: none;
-    border: none;
-    height: 100%;
-    width: 100%;
-    padding: 10px;
-    margin: 0;
-    &:focus {
-      outline: none;
-    }
+  span {
+    font-family: Fira Code;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 18px;
   }
-`;
-
-const ResponseTextArea = styled.textarea`
-  resize: none;
-  border: none;
-  height: 100%;
-  width: 100%;
-  padding: 10px;
-  margin: 0;
-  &:focus {
-    outline: none;
+  br {
+    display: ${(props) => (props.isbeatify ? 'block' : 'none')};
   }
 `;
 
@@ -116,23 +104,32 @@ const FooterStyle = styled.div`
 export const Console = () => {
   const dispatch = useDispatch();
   const {query, error, loading, response} = useSelector<AppState, ConsoleState>((state) => state.console);
-
-  const queryOnchange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    dispatch(setQueryText(e.currentTarget.value));
+  const [isbeatify, setisbeatify] = useState(false);
+  const [jsonValidateError, setjsonValidateError] = useState<string | null>(null);
+  const errorCondition = (jsonValidateError && jsonValidateError.length && true) || error;
+  const showError = jsonValidateError?.length ? jsonValidateError : response;
+  const setError = (error: string | null): void => {
+    setjsonValidateError(error ? JSON.stringify({error}) : error);
   };
+  useEffect(() => {
+    if (loading) {
+      setjsonValidateError(null);
+    }
+  }, [loading]);
+
   const execute = () => {
     dispatch(runQuery(query));
   };
   const beautify = () => {
-    dispatch(formatText());
+    setisbeatify(!isbeatify);
   };
 
   return (
     <>
-      <ConsoleWrap error={error}>
+      <ConsoleWrap error={errorCondition} isbeatify={isbeatify}>
         <ResizablePanels>
-          <textarea className="query-textarea" onChange={queryOnchange} value={query ?? '{}'} defaultValue="{}"></textarea>
-          <ResponseTextArea defaultValue="{}" value={response} readOnly={true} />
+          <JsonEditor setError={setError} value={query} id={'edit'} />
+          <JsonEditor value={showError} readonly={true} id={'notedit'} />
         </ResizablePanels>
       </ConsoleWrap>
       <FooterStyle>

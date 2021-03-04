@@ -27,12 +27,8 @@ const createQueryHistory = (query: object, isFailure: boolean): HistoryType => {
     status: !isFailure,
   };
 };
-const fromJsonToObj = (query: Query): object | undefined => {
-  try {
-    return JSON.parse(query);
-  } catch (error) {
-    return undefined;
-  }
+const fromJsonToObj = (query: Query): object => {
+  return JSON.parse(query);
 };
 const toJSON = (query: object): string => {
   return JSON.stringify(query, null, 4);
@@ -42,32 +38,28 @@ const beautify = (text: string): string => {
     const json = JSON.parse(text);
     return JSON.stringify(json, null, 4);
   } catch (error) {
-    throw new Error('Неправильный формат json');
+    console.log(error);
+    return text;
   }
 };
 
 export function* runQuerySaga(action: runQueryAction): Generator {
   const {payload} = action;
   const format = fromJsonToObj(payload);
-  if (format) {
-    try {
-      yield put(startFetchingQuery());
-      const result = yield api.sendsay.request({
-        ...format,
-      });
-      yield put(setReponse(toJSON(result as Promise<object>)));
-      yield put(setHistory(createQueryHistory(format, false)));
-      yield put(successFetchingQuery());
-    } catch (error) {
-      yield put(setReponse(toJSON(error)));
-      yield put(setHistory(createQueryHistory(format, true)));
-      yield put(errorFetchingQuery());
-    } finally {
-      yield put(stopFetchingQuery());
-    }
-  } else {
-    yield put(setReponse('Неправильный формат json'));
+  try {
+    yield put(startFetchingQuery());
+    const result = yield api.sendsay.request({
+      ...format,
+    });
+    yield put(setReponse(toJSON(result as Promise<object>)));
+    yield put(setHistory(createQueryHistory(format, false)));
+    yield put(successFetchingQuery());
+  } catch (error) {
+    yield put(setReponse(toJSON(error)));
+    yield put(setHistory(createQueryHistory(format, true)));
     yield put(errorFetchingQuery());
+  } finally {
+    yield put(stopFetchingQuery());
   }
 }
 
@@ -75,23 +67,18 @@ export function* runHistorySaga(action: runHistoryAction): Generator {
   const {payload} = action;
   const format = fromJsonToObj(payload.query);
   yield put(setQueryText(payload.query));
-  if (format) {
-    try {
-      yield put(startFetchingQuery());
-      const result = yield api.sendsay.request({
-        ...format,
-      });
-      yield put(setReponse(toJSON(result as Promise<object>)));
-      yield put(successFetchingQuery());
-    } catch (error) {
-      yield put(setReponse(toJSON(error)));
-      yield put(errorFetchingQuery());
-    } finally {
-      yield put(stopFetchingQuery());
-    }
-  } else {
-    yield put(setReponse('Неправильный формат json'));
+  try {
+    yield put(startFetchingQuery());
+    const result = yield api.sendsay.request({
+      ...format,
+    });
+    yield put(setReponse(toJSON(result as Promise<object>)));
+    yield put(successFetchingQuery());
+  } catch (error) {
+    yield put(setReponse(toJSON(error)));
     yield put(errorFetchingQuery());
+  } finally {
+    yield put(stopFetchingQuery());
   }
 }
 
@@ -102,7 +89,6 @@ export function* formatTextSaga(action: formatTextAction): Generator {
     yield put(setQueryText(beautify(query as string)));
     yield put(setReponse(beautify(response as string)));
   } catch (error) {
-    yield put(setReponse('Неправильный формат json'));
     yield put(errorFetchingQuery());
   }
 }

@@ -1,5 +1,6 @@
 /* Fonts */
 @import url('./stylesheet.css');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap');
 
 * {
   box-sizing: border-box;
@@ -32,4 +33,9 @@ nav ul {
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+#edit-labels,
+#notedit-labels {
+  display: none !important;
 }
