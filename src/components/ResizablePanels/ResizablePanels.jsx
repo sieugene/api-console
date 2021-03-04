@@ -17,7 +17,6 @@ const ResizableStyles = styled.div`
 
   .resizer {
     width: 8px;
-    background: darkGray;
     position: relative;
     cursor: col-resize;
     flex-shrink: 0;
@@ -26,21 +25,26 @@ const ResizableStyles = styled.div`
     -ms-user-select: none; /* IE 10+ */
     user-select: none; /* Likely future */
   }
-
-  .resizer::after,
-  .resizer::before {
-    content: '';
-    border-left: 1px solid #333;
+  .resizer-button {
     position: absolute;
     top: 50%;
     transform: translateY(-100%);
     right: 0;
-    display: inline-block;
+    display: block;
     height: 20px;
-    margin: 0 2px;
-  }
-  .resizer::before {
-    left: 0;
+    width: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    span {
+      background: rgba(0, 0, 0, 0.2);
+      height: 4px;
+      width: 4px;
+      display: block;
+      border-radius: 50%;
+      margin-bottom: 3px;
+    }
   }
 `;
 
@@ -111,7 +115,13 @@ export class ResizablePanels extends React.Component {
                   key={'resizer_' + i}
                   style={this.state.currentPanel === i + 1 ? {left: this.state.delta} : {}}
                   className={`resizer ${this.state.currentPanel === i + 1 ? ' active' : ''}`}
-                ></div>,
+                >
+                  <div className="resizer-button">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </div>
+                </div>,
                 <div key={'panel_' + i} className={`panel`} style={{width: this.state.panels[i + 1]}}>
                   {child}
                 </div>,

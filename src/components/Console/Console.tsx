@@ -31,7 +31,7 @@ const ConsoleWrap = styled.div`
     background: none;
   }
   .resizer.active {
-    background: #e6e6e6;
+    background: #e6e6e666;
   }
   width: 100%;
   span {
