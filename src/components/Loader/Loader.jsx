@@ -103,8 +103,8 @@ const Spinner = styled.div`
 export const Loader = () => {
   return (
     <Spinner>
-      <div class="loadingio-spinner-spinner-alx2d5z5kk5">
-        <div class="ldio-0papd6qpzgo">
+      <div className="loadingio-spinner-spinner-alx2d5z5kk5">
+        <div className="ldio-0papd6qpzgo">
           <div></div>
           <div></div>
           <div></div>

@@ -7,6 +7,7 @@ import {LoginForm} from '../components/Forms/LoginForm/LoginForm';
 
 import {LoginValues} from '../store/constants';
 import {useLoginForm} from '../components/Forms/LoginForm/hooks/useLoginForm';
+import {notCyrillicValidate} from '../helpers/validate';
 
 const Wrapper = styled.div`
   height: 100%;
@@ -49,7 +50,7 @@ const LoginPage: FC = () => {
       errors.login = 'Required';
     }
 
-    if (!values.password) {
+    if (!values.password || notCyrillicValidate(values.password) || values.password?.length <= 4) {
       errors.password = 'Required';
     }
     disableButtonForm(errors);
