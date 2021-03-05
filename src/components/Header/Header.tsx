@@ -156,7 +156,13 @@ export const Header = () => {
       </div>
       <div className="user__header">
         <div className="user-info">
-          <div className="login">{login ?? ''}</div>:<div className="sublogin">{sublogin ?? 'sublogin'}</div>
+          <div className="login">{login ?? ''}</div>
+          {sublogin && (
+            <>
+              {' '}
+              :<div className="sublogin">{sublogin}</div>{' '}
+            </>
+          )}
         </div>
         <div className="exit" onClick={userLogout}>
           Выйти

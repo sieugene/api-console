@@ -53,7 +53,7 @@ export const HistoryItem: FC<Props> = ({data, isLast}) => {
   const dispatch = useDispatch();
 
   const createNameQuery = (query: string) => {
-    return query ? JSON.parse(query)?.action ?? '' : '';
+    return query ? JSON.parse(query)?.action ?? 'unknown.method' : 'unknown.method';
   };
 
   const [dropdown, setdropdown] = useState(false);
