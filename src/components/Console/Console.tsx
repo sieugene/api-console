@@ -53,6 +53,12 @@ const FooterStyle = styled.div`
   align-items: center;
   background: #ffffff;
   padding: 15px;
+  @media (max-width: 768px) {
+    overflow-x: auto;
+    div{
+      padding-right: 20px;
+    }
+  }
   .link a {
     text-decoration: none;
     font-family: SF Pro Text;
@@ -84,6 +90,9 @@ const FooterStyle = styled.div`
     display: flex;
     align-items: center;
     color: #0d0d0d;
+    @media (max-width: 768px) {
+      font-size: 13px;
+    }
     &:focus {
       border: 2px solid #45a5ff;
     }

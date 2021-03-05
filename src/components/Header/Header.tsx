@@ -10,7 +10,6 @@ import {ReactComponent as FullScreenIcon} from './icons/full-screen.svg';
 import {ReactComponent as FullScreenExitIcon} from './icons/full-screen-exit.svg';
 
 const HeaderStyles = styled.div`
-  // overflow: hidden;
   padding-top: 10px;
   padding-bottom: 10px;
   padding-left: 15px;
@@ -20,6 +19,9 @@ const HeaderStyles = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-between;
+  @media (max-width: 768px) {
+    overflow-x: auto;
+  }
   .logo__header {
     display: flex;
     .title {
@@ -33,6 +35,10 @@ const HeaderStyles = styled.div`
       display: flex;
       align-items: center;
       color: #0d0d0d;
+      @media (max-width: 768px) {
+        font-size: 16px;
+        min-width: 115px;
+      }
     }
   }
   .user__header {
@@ -62,6 +68,9 @@ const HeaderStyles = styled.div`
         display: flex;
         align-items: center;
         color: #0d0d0d;
+        @media (max-width: 768px) {
+          font-size: 13px;
+        }
       }
       .login {
         margin-right: 5px;
@@ -82,6 +91,9 @@ const HeaderStyles = styled.div`
       display: flex;
       align-items: center;
       color: #0d0d0d;
+      @media (max-width: 768px) {
+        font-size: 13px;
+      }
     }
     .fullscreen-wrap {
       display: flex;
@@ -105,12 +117,19 @@ const LogoStyled = styled.img`
   margin-right: 20px;
   max-width: 115px;
   max-height: 30px;
+  @media (max-width: 768px) {
+    max-width: 85px;
+  }
 `;
 
 const Exit = styled.img`
   margin-left: 8px;
   max-width: 24px;
   max-height: 24px;
+  @media (max-width: 768px) {
+    max-width: 18px;
+    max-height: 18px;
+  }
 `;
 
 export const Header = () => {

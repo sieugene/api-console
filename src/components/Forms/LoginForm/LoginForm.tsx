@@ -14,6 +14,9 @@ const FormStyle = styled.section`
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
   padding: 40px 30px;
+  @media (max-width: 576px) {
+    width: 95%;
+  }
 `;
 const FieldBody = styled.div`
   margin-bottom: 20px;
