@@ -60,11 +60,27 @@ export class ResizablePanels extends React.Component {
   }
 
   get storagePanels() {
+    let panels;
     if (localStorage.getItem('resize')) {
-      return JSON.parse(localStorage.getItem('resize'));
+      panels = JSON.parse(localStorage.getItem('resize'));
     } else {
-      return [0, Math.floor(window.innerWidth / 2), 0];
+      panels = [0, Math.floor(window.innerWidth / 2), 0];
     }
+    return {
+      ...panels,
+      // hardcode
+      '1': this.maxSizePanels(1, panels),
+      '2': this.maxSizePanels(2, panels),
+    };
+  }
+
+  set storagePanels(panels) {
+    localStorage.setItem('resize', JSON.stringify(panels));
+  }
+
+  maxSizePanels(idx, panels) {
+    //If sizes will be changed
+    return window.innerWidth >= panels[idx] ? panels[idx] : window.innerWidth;
   }
 
   componentDidMount() {
@@ -90,7 +106,7 @@ export class ResizablePanels extends React.Component {
           [currentPanel]: (panels[currentPanel] || 0) - delta,
           [currentPanel - 1]: (panels[currentPanel - 1] || 0) + delta,
         };
-        localStorage.setItem('resize', JSON.stringify(panelsTotal));
+        this.storagePanels = panelsTotal;
         return {
           isDragging: false,
           panels: {
