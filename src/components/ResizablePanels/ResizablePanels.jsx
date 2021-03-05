@@ -53,11 +53,18 @@ export class ResizablePanels extends React.Component {
 
   constructor() {
     super();
-
     this.state = {
       isDragging: false,
-      panels: [0, Math.floor(window.innerWidth / 2), 0],
+      panels: this.storagePanels,
     };
+  }
+
+  get storagePanels() {
+    if (localStorage.getItem('resize')) {
+      return JSON.parse(localStorage.getItem('resize'));
+    } else {
+      return [0, Math.floor(window.innerWidth / 2), 0];
+    }
   }
 
   componentDidMount() {
@@ -77,16 +84,22 @@ export class ResizablePanels extends React.Component {
 
   stopResize = () => {
     if (this.state.isDragging) {
-      this.setState(({panels, currentPanel, delta}) => ({
-        isDragging: false,
-        panels: {
+      this.setState(({panels, currentPanel, delta}) => {
+        const panelsTotal = {
           ...panels,
           [currentPanel]: (panels[currentPanel] || 0) - delta,
           [currentPanel - 1]: (panels[currentPanel - 1] || 0) + delta,
-        },
-        delta: 0,
-        currentPanel: null,
-      }));
+        };
+        localStorage.setItem('resize', JSON.stringify(panelsTotal));
+        return {
+          isDragging: false,
+          panels: {
+            ...panelsTotal,
+          },
+          delta: 0,
+          currentPanel: null,
+        };
+      });
     }
   };
 
